@@ -5,7 +5,7 @@ import scala.io.BufferedSource
 import scala.compiletime.ops.boolean
 
 @main def hello: Unit =
-  day1Part1(s"$currentDirectory/src/main/scala/input.txt")
+  day1Part2(s"$currentDirectory/src/main/scala/input.txt")
 
 val currentDirectory = new java.io.File(".").getCanonicalPath
 
