@@ -3,11 +3,20 @@ def day2Part1(fileLocation: String): Unit = {
 
   var horizontal = 0
   var depth = 0
+  var aim = 0
 
   input.foreach(_ match {
-    case ("forward", distance) => horizontal = horizontal + distance
-    case ("down", distance)    => depth = depth + distance
-    case ("up", distance)      => depth = depth - distance
+    case ("forward", distance) => {
+      horizontal = horizontal + distance
+      val depthToAdd = aim * distance
+      depth = depth + depthToAdd
+    }
+    case ("down", distance) => {
+      aim = aim + distance
+    }
+    case ("up", distance) => {
+      aim = aim - distance
+    }
   })
 
   println(horizontal * depth)
