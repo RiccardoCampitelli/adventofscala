@@ -51,7 +51,24 @@ def markNumber(
       }
     })
   )
+}
 
+def markNumberDay2(
+    board: Board,
+    number: Int
+): Board = {
+
+  board.board = board.board.map(row =>
+    row.map(boardValue => {
+      if (boardValue.value == number) {
+        BoardValue(boardValue.value, true)
+      } else {
+        boardValue
+      }
+    })
+  )
+
+  board
 }
 
 def checkBoard(board: List[List[BoardValue]]): Boolean = {
@@ -117,5 +134,39 @@ def day4Part1(fileLocation: String): Unit = {
 
     }
   }
+}
 
+case class Board(var board: List[List[BoardValue]], var hasWon: Boolean)
+
+def day4Part2(fileLocation: String): Unit = {
+  val input = readFile(fileLocation)
+
+  var parsedInput = parseInputs(input).map(board => Board(board, false))
+
+  var number = 0
+
+  breakable {
+    for (number <- numbers) {
+
+      parsedInput = parsedInput
+        .map(board => markNumberDay2(board, number))
+        .filter(board => board.hasWon == false)
+
+      val inputClone = parsedInput.map(identity)
+
+      parsedInput.map(board => {
+        val hasWon = checkBoard(board.board)
+
+        if (hasWon) {
+
+          board.hasWon = true
+          val score = calculateScore(board.board, number)
+
+          println(score)
+        }
+        board
+      })
+
+    }
+  }
 }
